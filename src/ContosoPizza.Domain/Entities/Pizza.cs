@@ -1,7 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using System.Data.Common;
 using System.Runtime.CompilerServices;
 
-namespace ContosoPizza.Domain;
+namespace ContosoPizza.Domain.Entities;
 
 public class Pizza
 {
@@ -24,6 +25,8 @@ public class Pizza
 
     // Propriedades
     public Guid Id {get; private set;}
+
+    [Required]
     public string Nome {get; private set;}
     public string Descricao {get; private set;}
 
