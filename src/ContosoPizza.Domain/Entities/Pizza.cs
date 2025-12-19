@@ -32,7 +32,7 @@ public class Pizza
 
     public decimal Preco {get; private set;}
     public string Tamanho {get; private set;}
-    public bool Ativa {get; private set;}
+    public bool Status {get; private set;}
 
     public DateTime DataCriacao {get; private set;}
     public DateTime DataAtualizacao {get; private set;}
@@ -51,14 +51,14 @@ public class Pizza
 
     public void Ativar()
     {
-        Ativa = true;
+        Status = true;
         DataAtualizacao = DateTime.UtcNow;
     }
 
 
     public void Desativar()
     {
-        Ativa = false;
+        Status = false;
         DataAtualizacao = DateTime.UtcNow;
     }
 
