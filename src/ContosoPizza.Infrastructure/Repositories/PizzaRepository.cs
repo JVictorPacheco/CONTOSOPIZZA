@@ -117,10 +117,10 @@ public class PizzaRepository : IPizzaRepository
 
        // ==================== PERSISTENCIA ====================
 
-       public async Task<int> SaveChangesAsync (CancellationToken cancellationToken = default) // Método para salvar as alterações no banco de dados
-     {
-            return await _context.SaveChangesAsync(cancellationToken);  // Salva as alterações no contexto. Nessa linha estamos chamando o método SaveChangesAsync do DbContext para persistir as alterações no banco de dados.
-     }
+    public async Task<int> SaveChangesAsync (CancellationToken cancellationToken = default) // Método para salvar as alterações no banco de dados
+    {
+        return await _context.SaveChangesAsync(cancellationToken);  // Salva as alterações no contexto. Nessa linha estamos chamando o método SaveChangesAsync do DbContext para persistir as alterações no banco de dados.
+    }
 
 }
 
