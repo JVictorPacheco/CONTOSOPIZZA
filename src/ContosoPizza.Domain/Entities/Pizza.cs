@@ -1,7 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Data.Common;
-using System.Runtime.CompilerServices;
-
 namespace ContosoPizza.Domain.Entities;
 
 public class Pizza
@@ -12,6 +8,26 @@ public class Pizza
     // Construtor público para criação de entidade
     public Pizza(string nome, string descricao, decimal preco, string tamanho)
     {
+
+        // Validações Explicitas
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new ArgumentException("O nome da pizza não pode ser vazio.", nameof(nome));
+
+        if (string.IsNullOrWhiteSpace(descricao))
+            throw new ArgumentException("A descrição da pizza é obrigatória.", nameof(descricao));
+
+        if (preco <= 0)
+            throw new ArgumentException("O preço da pizza deve ser maior que zero.", nameof(preco));
+
+        if (string.IsNullOrWhiteSpace(tamanho))
+            throw new ArgumentException("O tamanho da pizza é obrigatório.", nameof(tamanho));
+
+        // validaçnao avançado de tamanho
+        var tamanhosValidos = new List<string> { "Pequena", "Média", "Grande", "Família" };
+        if (!tamanhosValidos.Contains(tamanho))
+            throw new ArgumentException($"Tamanho inválido. Valores aceitos: {string.Join(", ", tamanhosValidos)}", nameof(tamanho));
+
+
         Id = Guid.NewGuid();
         Nome = nome;
         Descricao = descricao;
@@ -26,21 +42,40 @@ public class Pizza
     // Propriedades
     public Guid Id {get; private set;}
 
-    [Required]
     public string Nome {get; private set;}
     public string Descricao {get; private set;}
 
     public decimal Preco {get; private set;}
     public string Tamanho {get; private set;}
-    public bool Status {get; private set;}
+    public bool Ativa {get; private set;}
 
     public DateTime DataCriacao {get; private set;}
     public DateTime DataAtualizacao {get; private set;}
 
 
+
     // Métodos de negócio (encapsulamento)
     public void Atualizar(string nome, string descricao, decimal preco, string tamanho)
     {
+
+        // Reutilizar mesmas validações do construtor
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new ArgumentException("O nome da pizza não pode ser vazio.", nameof(nome));
+
+        if (string.IsNullOrWhiteSpace(descricao))
+            throw new ArgumentException("A descrição da pizza é obrigatória.", nameof(descricao));
+
+        if (preco <= 0)
+            throw new ArgumentException("O preço da pizza deve ser maior que zero.", nameof(preco));
+        
+        if (string.IsNullOrWhiteSpace(tamanho))
+            throw new ArgumentException("O tamanho da pizza é obrigatório.", nameof(tamanho));
+
+        var tamanhosValidos = new List<string> { "Pequena", "Média", "Grande", "Família" };
+        if (!tamanhosValidos.Contains(tamanho))
+            throw new ArgumentException($"Tamanho inválido. Valores aceitos: {string.Join(", ", tamanhosValidos)}", nameof(tamanho));
+
+
         Nome = nome;
         Descricao = descricao;
         Preco = preco;
@@ -51,14 +86,14 @@ public class Pizza
 
     public void Ativar()
     {
-        Status = true;
+        Ativa = true;
         DataAtualizacao = DateTime.UtcNow;
     }
 
 
     public void Desativar()
     {
-        Status = false;
+        Ativa = false;
         DataAtualizacao = DateTime.UtcNow;
     }
 
@@ -74,3 +109,6 @@ public class Pizza
     }
 
 }
+
+
+// commit para test seguindo o git flow
