@@ -42,11 +42,11 @@ public class Pizza
     // Propriedades
     public Guid Id {get; private set;}
 
-    public string Nome {get; private set;}
-    public string Descricao {get; private set;}
+    public string Nome {get; private set;} = string.Empty;
+    public string Descricao {get; private set;} = string.Empty;
 
     public decimal Preco {get; private set;}
-    public string Tamanho {get; private set;}
+    public string Tamanho {get; private set;} = string.Empty;
     public bool Ativa {get; private set;}
 
     public DateTime DataCriacao {get; private set;}

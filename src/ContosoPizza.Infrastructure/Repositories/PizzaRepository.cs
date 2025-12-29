@@ -9,8 +9,8 @@ namespace ContosoPizza.Infrastructure.Repositories;
 
 public class PizzaRepository : IPizzaRepository
 {
-    private readonly AppDbContext _context; // Aqui estamos criando uma variável de contexto
-    private readonly Dbset<Pizza> _dbSet; // Aqui estamos criando uma variável do tipo DbSet para a entidade Pizza
+    private readonly ApplicationDbContext _context; // Aqui estamos criando uma variável de contexto
+    private readonly DbSet<Pizza> _dbSet; // Aqui estamos criando uma variável do tipo DbSet para a entidade Pizza
 
     //Constructor, no construtor estamos injetando o ApplicationDbContext
     public PizzaRepository(ApplicationDbContext context)
@@ -21,27 +21,27 @@ public class PizzaRepository : IPizzaRepository
 
     // ==================== COMANDOS (CUD) ====================
 
-    public async Task<Pizza> AdicionarBeneficiarioAsync(Pizza pizza, CancellationToken cancellationToken = default)
+    public async Task<Pizza> AdicionarAsync(Pizza pizza, CancellationToken cancellationToken = default)
     {
         if (pizza == null)
             throw new ArgumentNullException(nameof(pizza));
 
-            await _dbSet.addAsync(pizza, cancellationToken);
+            await _dbSet.AddAsync(pizza, cancellationToken);
             return pizza;
     }
 
-    public async Task<Pizza> AtualizarBeneficiarioAsync(Pizza pizza, CancellationToken cancellationToken = default)
+    public Task AtualizarAsync(Pizza pizza, CancellationToken cancellationToken = default)
     {
         if (pizza == null)
-            throw new ArgumentNullExeception(nameof(pizza));  // Se for nulo, lança uma exceção. nameof retorna o nome do parâmetro
+            throw new ArgumentNullException(nameof(pizza));  // Se for nulo, lança uma exceção. nameof retorna o nome do parâmetro
 
-            await _dbSet.Update(pizza); // Atualiza a entidade pizza no DbSet
+            _dbSet.Update(pizza); // Atualiza a entidade pizza no DbSet
             return Task.CompletedTask; // Retorna uma tarefa concluída
     }
 
-    public async Task<Pizza> RemoverBeneficiarioAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task RemoverAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var pizza = await ObterPizzaPorIdAsync(id, cancellationToken); // Obtém a pizza pelo id
+        var pizza = await ObterPorIdAsync(id, cancellationToken); // Obtém a pizza pelo id
         
         if (pizza == null)
             throw new InvalidOperationException($"Pizza com ID {id} não encontrada.");
@@ -57,14 +57,14 @@ public class PizzaRepository : IPizzaRepository
 
         // ==================== CONSULTAS (READ) ====================
 
-    public async Task<Pizza?> ObterPizzaPorIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Pizza?> ObterPorIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _dbSet
             .AsNoTracking() // Não rastreia a entidade para melhorar o desempenho
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken); // Retorna a primeira pizza que corresponde ao id ou nulo se não encontrar
     }
 
-    public async Task<IEnumerable<Pizza>> ObterTodasPizzasAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Pizza>> ObterTodasAsync(CancellationToken cancellationToken = default)
     {
         return await _dbSet
             .AsNoTracking() // Não rastreia as entidades para melhorar o desempenho, porque são apenas para leitura
@@ -73,7 +73,7 @@ public class PizzaRepository : IPizzaRepository
     }
 
 
-    public async Task<IEnumerable<Pizza>> ObterPizzasAtivasAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Pizza>> ObterAtivasAsync(CancellationToken cancellationToken = default)
     {
         return await _dbSet
             .AsNoTracking()
@@ -82,7 +82,7 @@ public class PizzaRepository : IPizzaRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Pizza>> ObterPizzasPorTamanhoAsync(string tamanho, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Pizza>> ObterPorTamanhoAsync(string tamanho, CancellationToken cancellationToken = default)
     {
 
         if (string.IsNullOrWhiteSpace(tamanho))
@@ -95,10 +95,10 @@ public class PizzaRepository : IPizzaRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<Pizza?> ObterPizzaPorNomeAsync(string nome, CancellationToken cancellationToken = default)
+    public async Task<Pizza?> ObterPorNomeAsync(string nome, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(nome))
-            throw new ArgumentException("O nome não pode ser nulo ou vazio.", nameof(nome)); // Valida o parâmetro nome
+            return null; // Valida o parâmetro nome
 
         return await _dbSet
             .AsNoTracking()
@@ -107,11 +107,23 @@ public class PizzaRepository : IPizzaRepository
 
         // ==================== VERIFICAÇÕES ====================
 
-    public async Task<bool> PizzaExisteAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<bool> ExisteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _dbSet
             .AsNoTracking()
             .AnyAsync(p => p.Id == id, cancellationToken); // Verifica se existe alguma pizza com o id fornecido
+    }
+
+
+    public async Task<bool> ExistePorNomeAsync(string nome, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            return false; // Valida o parâmetro nome
+
+        
+        return await _dbSet
+            .AsNoTracking()
+            .AnyAsync(p => p.Nome == nome, cancellationToken); // Verifica se existe alguma pizza com o nome fornecido        
     }
     
 
