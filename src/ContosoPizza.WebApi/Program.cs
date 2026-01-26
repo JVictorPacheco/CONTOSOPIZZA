@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ContosoPizza.Infrastructure.Data;
-using Microsoft.Extensions.Options;
+using ContosoPizza.Domain.Interfaces;
+using ContosoPizza.Infrastructure.Repositories;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,10 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
-// Configurar OpenAPI/Swagger
-builder.Services.AddOpenApi();
-
-
+// Configurar Swagger/OpenAPI (usando Swashbuckle)
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // ==================== ENTITY FRAMEWORK CORE + POSTGRESQL ====================
 
@@ -39,7 +40,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options =>
 // ==================== DEPENDENCY INJECTION (DI) ====================
 
 // TODO: Registrar repositórios e services aqui
-// builder.Services.AddScoped<IPizzaRepository, PizzaRepository>();
+builder.Services.AddScoped<IPizzaRepository, PizzaRepository>();
 // builder.Services.AddScoped<IPizzaService, PizzaService>();
 
 // ==================== BUILD DA APLICAÇÃO ====================
@@ -53,8 +54,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+
 
 app.UseHttpsRedirection();
 
