@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "ContosoPizza",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
