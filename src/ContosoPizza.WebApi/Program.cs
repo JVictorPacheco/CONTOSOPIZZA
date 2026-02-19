@@ -52,11 +52,9 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Swagger habilitado para todos os ambientes (para testes)
+app.UseSwagger();
+app.UseSwaggerUI();
 
 
 
