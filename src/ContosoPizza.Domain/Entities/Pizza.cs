@@ -28,7 +28,7 @@ public class Pizza
             throw new ArgumentException($"Tamanho inválido. Valores aceitos: {string.Join(", ", tamanhosValidos)}", nameof(tamanho));
 
 
-        Id = Guid.NewGuid();
+        PizzaId = Guid.NewGuid();
         Nome = nome;
         Descricao = descricao;
         Preco  = preco;
@@ -40,7 +40,7 @@ public class Pizza
 
 
     // Propriedades
-    public Guid Id {get; private set;}
+    public Guid PizzaId {get; private set;}
 
     public string Nome {get; private set;} = string.Empty;
     public string Descricao {get; private set;} = string.Empty;
