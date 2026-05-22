@@ -1,8 +1,6 @@
 using ContosoPizza.Domain.Entities;
 
-
 namespace ContosoPizza.Domain.Interfaces;
-
 
 public interface IPizzaRepository
 {
@@ -12,7 +10,6 @@ public interface IPizzaRepository
     Task RemoverAsync (Guid id, CancellationToken cancellationToken = default);
 
     // Consultas (Read)
-
     Task<Pizza?> ObterPorIdAsync (Guid id, CancellationToken cancellationToken = default);
     Task<IEnumerable<Pizza>> ObterTodasAsync (CancellationToken cancellationToken = default);
     Task<IEnumerable<Pizza>> ObterAtivasAsync (CancellationToken cancellationToken = default);
@@ -21,7 +18,4 @@ public interface IPizzaRepository
 
     Task<bool> ExisteAsync (Guid id, CancellationToken cancellationToken = default);
     Task<bool> ExistePorNomeAsync (string nome, CancellationToken cancellationToken = default); 
-
-    // Persistencia 
-    Task<int> SaveChangesAsync (CancellationToken cancellationToken = default);
 }

@@ -1,14 +1,16 @@
+using ContosoPizza.Domain.Enums;
+using ContosoPizza.Domain.Common;
+
 namespace ContosoPizza.Domain.Entities;
 
-public class Pizza
+public class Pizza : BaseEntity
 {
     // Construtor privado para EF Core
     private Pizza() { }
 
     // Construtor público para criação de entidade
-    public Pizza(string nome, string descricao, decimal preco, string tamanho)
+    public Pizza(string nome, string descricao, PizzaStyle estilo,decimal preco, string tamanho)
     {
-
         // Validações Explicitas
         if (string.IsNullOrWhiteSpace(nome))
             throw new ArgumentException("O nome da pizza não pode ser vazio.", nameof(nome));
@@ -26,34 +28,30 @@ public class Pizza
         var tamanhosValidos = new List<string> { "Pequena", "Média", "Grande", "Família" };
         if (!tamanhosValidos.Contains(tamanho))
             throw new ArgumentException($"Tamanho inválido. Valores aceitos: {string.Join(", ", tamanhosValidos)}", nameof(tamanho));
-
-
+        
+        
         Id = Guid.NewGuid();
         Nome = nome;
         Descricao = descricao;
+        Estilo = estilo;
         Preco  = preco;
         Tamanho = tamanho;
         Ativa   = true;
         DataCriacao = DateTime.UtcNow;
         DataAtualizacao = DateTime.UtcNow;
     }
-
-
+    
     // Propriedades
-    public Guid Id {get; private set;}
-
     public string Nome {get; private set;} = string.Empty;
     public string Descricao {get; private set;} = string.Empty;
-
+    public PizzaStyle? Estilo {get; private set;}
     public decimal Preco {get; private set;}
     public string Tamanho {get; private set;} = string.Empty;
     public bool Ativa {get; private set;}
-
     public DateTime DataCriacao {get; private set;}
     public DateTime DataAtualizacao {get; private set;}
-
-
-
+    
+    
     // Métodos de negócio (encapsulamento)
     public void Atualizar(string nome, string descricao, decimal preco, string tamanho)
     {
@@ -107,8 +105,4 @@ public class Pizza
         Preco = novoPreco;
         DataAtualizacao = DateTime.UtcNow;
     }
-
 }
-
-
-// commit para test seguindo o git flow

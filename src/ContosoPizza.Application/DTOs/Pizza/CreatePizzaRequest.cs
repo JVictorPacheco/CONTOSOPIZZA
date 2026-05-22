@@ -1,3 +1,5 @@
+using ContosoPizza.Domain.Enums;
+
 namespace ContosoPizza.Application.DTOs.Pizza;
 
 
@@ -12,6 +14,7 @@ namespace ContosoPizza.Application.DTOs.Pizza;
 public record CreatePizzaRequest(
         string Nome,
         string Descricao,
+        PizzaStyle Estilo,
         decimal Preco,
         string Tamanho
 

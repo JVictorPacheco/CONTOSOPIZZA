@@ -1,8 +1,8 @@
 namespace ContosoPizza.Domain.Enums;
 
-public enum PizzaStyleEnums
+public enum PizzaStyle
 {
-    Crispy;
+    Crispy,
     Chewy,
     Bready
 }

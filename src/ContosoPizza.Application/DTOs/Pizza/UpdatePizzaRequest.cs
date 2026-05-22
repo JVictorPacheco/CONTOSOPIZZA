@@ -1,7 +1,7 @@
+using ContosoPizza.Domain.Enums;
+
+
 namespace ContosoPizza.Application.DTOs.Pizza;
-
-
-
 
 /// <summary>
 /// DTO para atualização de uma pizza existente
@@ -13,6 +13,7 @@ namespace ContosoPizza.Application.DTOs.Pizza;
 public record UpdatePizzaRequest(
         string Nome,
         string Descricao,
+        PizzaStyle Estilo,
         decimal Preco,
         string Tamanho
     );

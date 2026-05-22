@@ -86,14 +86,11 @@ public class PizzasController : ControllerBase
     {
         _logger.LogInformation("Criando uma nova pizza: {Nome}", request.Nome);
 
-
         try
         {
-            var pizza = new Pizza(request.Nome, request.Descricao, request.Preco, request.Tamanho);
-
-
+            var pizza = new Pizza(request.Nome, request.Descricao, request.Estilo, request.Preco, request.Tamanho);
+            
             await _repository.AdicionarAsync(pizza, cancellationToken);
-            await _repository.SaveChangesAsync(cancellationToken);
 
             _logger.LogInformation("Pizza criada com sucesso. ID: {PizzaId}", pizza.Id);
 
@@ -136,8 +133,6 @@ public class PizzasController : ControllerBase
             pizza.Atualizar(request.Nome, request.Descricao, request.Preco, request.Tamanho);
 
             await _repository.AtualizarAsync(pizza, cancellationToken);
-            await _repository.SaveChangesAsync(cancellationToken);
-
 
             _logger.LogInformation("Pizza {PizzaId} atualizado com sucesso.", id);
 
@@ -177,7 +172,6 @@ public class PizzasController : ControllerBase
         {
             pizza.Desativar();
             await _repository.AtualizarAsync(pizza, cancellationToken);
-            await _repository.SaveChangesAsync(cancellationToken);
 
             _logger.LogInformation("Pizza {PizzaId} desativada com sucesso", id);
 
