@@ -1,0 +1,41 @@
+## .NET / C#
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userprefs
+*.DS_Store
+
+## NuGet
+*.nupkg
+.nuget/
+packages/
+
+## EF Core
+*.db
+*.db-shm
+*.db-wal
+
+## Secrets / Config local
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+## Logs
+logs/
+*.log
+
+## Publish
+publish/
+out/
+
+## Rider / JetBrains
+.idea/
+
+## VS Code
+.vscode/
+
+# Claude Code
+CLAUDE.md
+docs/
