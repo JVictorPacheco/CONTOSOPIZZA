@@ -1,0 +1,20 @@
+meta {
+  name: Buscar Pizza
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:5000/api/pizzas
+  body: json
+  auth: inherit
+}
+
+headers {
+  : 
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

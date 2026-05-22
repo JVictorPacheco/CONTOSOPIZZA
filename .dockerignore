@@ -1,0 +1,29 @@
+# Arquivos e pastas do .NET que não devem ir para o Docker
+**/bin/
+**/obj/
+**/out/
+**/*.trx
+**/*.md
+**/*.log
+
+# Arquivos do Git
+.git/
+.gitignore
+.gitattributes
+
+# Arquivos do Docker
+**/.dockerignore
+**/docker-compose*
+**/Dockerfile*
+
+# Arquivos do Visual Studio / Rider
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Outros
+README.md
+LICENSE
+.DS_Store

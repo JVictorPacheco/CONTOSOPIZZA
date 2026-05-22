@@ -1,0 +1,29 @@
+meta {
+  name: Criar Pizzas
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/api/pizzas
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "nome": "Calabresa",
+    "descricao": "Calabresa, cebola e azeitonas",
+    "preco": 42.90,
+    "tamanho": "Grande"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
