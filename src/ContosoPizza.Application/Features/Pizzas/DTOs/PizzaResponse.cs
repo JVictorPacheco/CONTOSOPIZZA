@@ -1,4 +1,4 @@
-namespace ContosoPizza.Application.DTOs.Pizza;
+namespace ContosoPizza.Application.Features.Pizzas.DTOs;
 
 
 /// <summary>

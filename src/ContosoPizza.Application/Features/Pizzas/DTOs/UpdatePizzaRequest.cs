@@ -1,4 +1,4 @@
-using ContosoPizza.Domain.Enums;
+namespace ContosoPizza.Application.Features.Pizzas.DTOs;
 
 
 namespace ContosoPizza.Application.DTOs.Pizza;
